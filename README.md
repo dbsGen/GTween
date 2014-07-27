@@ -5,7 +5,7 @@ A lightweight tween library for iOS. Ease functions from [tween.js](https://gith
 
 ======
 
-![Screen shoot](http://ntu.me/di/52XQS/gifs.gif）
+![Screen shoot](http://ntu.me/di/52XQS/gifs.gif)
 
 =======
 
