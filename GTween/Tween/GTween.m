@@ -445,5 +445,20 @@ static id _defaultManager;
     return self;
 }
 
+- (id)colorPro:(NSString *)name from:(UIColor *)from to:(UIColor *)to
+{
+    [self addProperty:[GTweenColorProperty property:name
+                                               from:from
+                                                 to:to]];
+    return self;
+}
+
+- (id)colorPro:(NSString *)name to:(UIColor *)to
+{
+    return [self colorPro:name
+                     from:GTGetter(UIColor*, name)
+                       to:to];
+}
+
 @end
 

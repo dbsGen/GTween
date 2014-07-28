@@ -54,3 +54,7 @@ float lerp(float f, float t, float m);
 + (id)property:(NSString*)name from:(CGFloat)from to:(CGFloat)to;
 @end
 
+@interface GTweenColorProperty : GTweenProperty
++ (id)property:(NSString*)name from:(UIColor*)from to:(UIColor*)to;
+@end
+

@@ -32,7 +32,9 @@ float lerp(float f, float t, float m) { return f*(1-m)+t*m; }
 
 - (SEL)setterSEL
 {
-    NSString *selString = [NSString stringWithFormat:@"set%@:", [self.name capitalizedString]];
+    NSLog(@"%@", [self.name substringToIndex:1]);
+    NSLog(@"%@", [self.name substringFromIndex:1]);
+    NSString *selString = [NSString stringWithFormat:@"set%@%@:", [[self.name substringToIndex:1] uppercaseString],[self.name substringFromIndex:1]];
     
     return sel_registerName([selString cStringUsingEncoding:NSUTF8StringEncoding]);
 }
@@ -181,7 +183,6 @@ CATransform3D transform3DLerp(CATransform3D from, CATransform3D to, float m) {
     return trans;
 }
 
-typedef void (*CATRANSFORM3D_SETTER_IMP)(id, SEL, CATransform3D);
 + (id)property:(NSString *)name from:(CATransform3D)from to:(CATransform3D)to
 {
     return [[self alloc] initWithName:name
@@ -214,6 +215,46 @@ typedef void (*CATRANSFORM3D_SETTER_IMP)(id, SEL, CATransform3D);
                        [self.toValue floatValue],
                        p);
     GTSetter(CATransform3D, target, imp, sel, CATransform3DMakeRotation(res, 0, 0, 1));
+}
+
+@end
+
+typedef struct GTColor {
+    float r,g,b,a;
+} GTColor;
+@implementation GTweenColorProperty {
+    BOOL _seted;
+    GTColor from, to;
+}
+UIColor* colorLerp(GTColor from, GTColor to, float m) {
+    return [UIColor colorWithRed:lerp(from.r, to.r, m)
+                           green:lerp(from.g, to.g, m)
+                            blue:lerp(from.b, to.b, m)
+                           alpha:lerp(from.a, to.a, m)];
+}
+
++ (id)property:(NSString *)name from:(UIColor *)from to:(UIColor *)to
+{
+    return [[self alloc] initWithName:name
+                                 from:from
+                                   to:to];
+}
+
+- (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel
+{
+    if (!_seted) {
+        _seted = true;
+        [self.fromValue getRed:&from.a
+                         green:&from.g
+                          blue:&from.b
+                         alpha:&from.a];
+        [self.toValue getRed:&to.r
+                       green:&to.g
+                        blue:&to.b
+                       alpha:&to.a];
+    }
+    UIColor *res = colorLerp(from, to, p);
+    return GTSetter(UIColor*, target, imp, sel, res);
 }
 
 @end
