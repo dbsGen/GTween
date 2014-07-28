@@ -126,6 +126,16 @@ static id _defaultManager;
     return self;
 }
 
+- (BOOL)isOver
+{
+    return _status == GTweenStatusStop;
+}
+
+- (float)currentPercent
+{
+    return _frame/(float)_totalFrame;
+}
+
 + (id)tween:(id)target duration:(NSTimeInterval)duration ease:(GEase *)ease
 {
     return [[self alloc] initWithTarget:target

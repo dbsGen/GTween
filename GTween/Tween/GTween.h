@@ -82,7 +82,6 @@ typedef enum : NSUInteger {
 
 - (id)rotationPro:(NSString *)name from:(CGFloat)from to:(CGFloat)to;
 
-
 - (id)colorPro:(NSString *)name from:(UIColor*)from to:(UIColor*)to;
 - (id)colorPro:(NSString *)name to:(UIColor*)to;
 
