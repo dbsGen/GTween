@@ -10,8 +10,6 @@
 
 float lerp(float f, float t, float m);
 
-typedef void (*SETTER_IMP)(id, SEL, ...);
-
 //  ----------- Base Class -----------
 
 @interface GTweenProperty : NSObject
@@ -26,7 +24,7 @@ typedef void (*SETTER_IMP)(id, SEL, ...);
 @end
 
 @interface GTweenProperty (Overdrive)
-- (void)progress:(float)p target:(id)target imp:(SETTER_IMP)imp selector:(SEL)sel;
+- (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel;
 @end
 
 
@@ -50,5 +48,9 @@ typedef void (*SETTER_IMP)(id, SEL, ...);
 
 @interface GTweenCATransform3DProperty : GTweenProperty
 + (id)property:(NSString*)name from:(CATransform3D)from to:(CATransform3D)to;
+@end
+
+@interface GTweenRotationProperty : GTweenProperty
++ (id)property:(NSString*)name from:(CGFloat)from to:(CGFloat)to;
 @end
 

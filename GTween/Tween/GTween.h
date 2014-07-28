@@ -13,7 +13,8 @@
 
 typedef enum : NSUInteger {
     GTweenStatusNoStart,
-    GTweenStatusProgress,
+    GTweenStatusPlayForword,
+    GTweenStatusPlayBackword,
     GTweenStatusPaused,
     GTweenStatusStop
 } GTweenStatus;
@@ -44,9 +45,12 @@ typedef enum : NSUInteger {
 - (void)pause;
 - (void)stop;
 - (void)reset;
+// Play Backword
+- (void)backword;
 
 // need override
-- (void)initializeTween;
+// Call before not play to start play.
+- (void)initializeTween:(BOOL)forword;
 
 @end
 
@@ -56,5 +60,26 @@ typedef enum : NSUInteger {
 
 + (id)tweenChain;
 - (void)addTween:(GTween*)tween;
+
+@end
+
+@interface GTween (GTweenProperty)
+
+- (id)floatPro:(NSString *)name from:(CGFloat)from to:(CGFloat)to;
+- (id)floatPro:(NSString *)name to:(CGFloat)to;
+
+- (id)rectPro:(NSString *)name from:(CGRect)from to:(CGRect)to;
+- (id)rectPro:(NSString *)name to:(CGRect)to;
+
+- (id)sizePro:(NSString *)name from:(CGSize)from to:(CGSize)to;
+- (id)sizePro:(NSString *)name to:(CGSize)to;
+
+- (id)pointPro:(NSString *)name from:(CGPoint)from to:(CGPoint)to;
+- (id)pointPro:(NSString *)name to:(CGPoint)to;
+
+- (id)transformPro:(NSString *)name from:(CATransform3D)from to:(CATransform3D)to;
+- (id)transformPro:(NSString *)name to:(CATransform3D)to;
+
+- (id)rotationPro:(NSString *)name from:(CGFloat)from to:(CGFloat)to;
 
 @end

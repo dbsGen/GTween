@@ -7,16 +7,21 @@
 //
 
 #import "GTweenProperty.h"
+#import "GTween.h"
 #import <objc/runtime.h>
 
 float lerp(float f, float t, float m) { return f*(1-m)+t*m; }
+#define GTSetter(TYPE, TARGET, MP, SELELCTER, VALUE) ({\
+    void (*imp_)(id, SEL, TYPE) = (void (*)(id, SEL, TYPE))MP;\
+    imp_(TARGET,SELELCTER, VALUE);\
+})
 
 // ---------------- Base Class ------------------
 
 @implementation GTweenProperty {
     SEL         _getter,
                 _setter;
-    SETTER_IMP  _setterIMP;
+    IMP         _setterIMP;
     
 }
 
@@ -49,19 +54,18 @@ float lerp(float f, float t, float m) { return f*(1-m)+t*m; }
 {
     if (!_setterIMP) {
         Method method = class_getInstanceMethod([target class], _setter);
-        _setterIMP = (SETTER_IMP)method_getImplementation(method);
+        _setterIMP = method_getImplementation(method);
     }
     [self progress:p target:target imp:_setterIMP selector:_setter];
 }
 
-- (void)progress:(float)p target:(id)target imp:(SETTER_IMP)imp selector:(SEL)sel {}
+- (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel {}
 
 @end
 
 
 // ------------------ Children ----------------------
 
-typedef void (*FLOAT_SETTER_IMP)(id, SEL, float);
 @implementation GTweenFloatProperty
 
 + (id)property:(NSString*)name from:(float)from to:(float)to
@@ -71,11 +75,10 @@ typedef void (*FLOAT_SETTER_IMP)(id, SEL, float);
                                    to:[NSNumber numberWithFloat:to]];
 }
 
-- (void)progress:(float)p target:(id)target imp:(SETTER_IMP)imp selector:(SEL)sel
+- (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel
 {
     float res = lerp([self.fromValue floatValue], [self.toValue floatValue], p);
-    FLOAT_SETTER_IMP imp_ = (FLOAT_SETTER_IMP)imp;
-    imp_(target, sel, res);
+    GTSetter(float, target, imp, sel, res);
 }
 
 @end
@@ -91,7 +94,6 @@ CGRect rectLerp(CGRect from, CGRect to, float m) {
     return rect;
 }
 
-typedef void (*CGRECT_SETTER_IMP)(id, SEL, CGRect);
 + (id)property:(NSString *)name from:(CGRect)from to:(CGRect)to
 {
 
@@ -100,11 +102,10 @@ typedef void (*CGRECT_SETTER_IMP)(id, SEL, CGRect);
                                    to:[NSValue valueWithCGRect:to]];
 }
 
-- (void)progress:(float)p target:(id)target imp:(SETTER_IMP)imp selector:(SEL)sel
+- (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel
 {
     CGRect res = rectLerp([self.fromValue CGRectValue], [self.toValue CGRectValue], p);
-    CGRECT_SETTER_IMP imp_ = (CGRECT_SETTER_IMP)imp;
-    imp_(target, sel, res);
+    GTSetter(CGRect, target, imp, sel, res);
 }
 
 @end
@@ -125,11 +126,10 @@ typedef void (*CGSIZE_SETTER_IMP)(id, SEL, CGSize);
                                    to:[NSValue valueWithCGSize:to]];
 }
 
-- (void)progress:(float)p target:(id)target imp:(SETTER_IMP)imp selector:(SEL)sel
+- (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel
 {
     CGSize res = sizeLerp([self.fromValue CGSizeValue], [self.toValue CGSizeValue], p);
-    CGSIZE_SETTER_IMP imp_ = (CGSIZE_SETTER_IMP)imp;
-    imp_(target, sel, res);
+    GTSetter(CGSize, target, imp, sel, res);
 }
 
 @end
@@ -149,13 +149,12 @@ typedef void (*CGPOINT_SETTER_IMP)(id, SEL, CGPoint);
                                    to:[NSValue valueWithCGPoint:to]];
 }
 
-- (void)progress:(float)p target:(id)target imp:(SETTER_IMP)imp selector:(SEL)sel
+- (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel
 {
     CGPoint res = pointLerp([self.fromValue CGPointValue],
                             [self.toValue CGPointValue],
                             p);
-    CGPOINT_SETTER_IMP imp_ = (CGPOINT_SETTER_IMP)imp;
-    imp_(target, sel, res);
+    GTSetter(CGPoint, target, imp, sel, res);
 }
 
 @end
@@ -190,13 +189,31 @@ typedef void (*CATRANSFORM3D_SETTER_IMP)(id, SEL, CATransform3D);
                                    to:[NSValue valueWithCATransform3D:to]];
 }
 
-- (void)progress:(float)p target:(id)target imp:(SETTER_IMP)imp selector:(SEL)sel
+- (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel
 {
     CATransform3D res = transform3DLerp([self.fromValue CATransform3DValue],
                                         [self.toValue CATransform3DValue],
                                         p);
-    CATRANSFORM3D_SETTER_IMP imp_ = (CATRANSFORM3D_SETTER_IMP)imp;
-    imp_(target, sel, res);
+    GTSetter(CATransform3D, target, imp, sel, res);
+}
+
+@end
+
+@implementation GTweenRotationProperty
+
++ (id)property:(NSString *)name from:(CGFloat)from to:(CGFloat)to
+{
+    return [[self alloc] initWithName:name
+                                 from:[NSNumber numberWithFloat:from]
+                                   to:[NSNumber numberWithFloat:to]];
+}
+
+- (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel
+{
+    CGFloat res = lerp([self.fromValue floatValue],
+                       [self.toValue floatValue],
+                       p);
+    GTSetter(CATransform3D, target, imp, sel, CATransform3DMakeRotation(res, 0, 0, 1));
 }
 
 @end
