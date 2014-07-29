@@ -23,7 +23,7 @@ typedef enum : NSUInteger {
 
 @property (nonatomic, readonly) id          target;
 @property (nonatomic, readonly) NSArray     *properties;
-@property (nonatomic, readonly) CGFloat     currentPercent;
+@property (nonatomic, readonly) float       currentPercent;
 @property (nonatomic, readonly) BOOL        isOver;
 @property (nonatomic, readonly) id          ease;
 @property (nonatomic, readonly) GTweenStatus    status;

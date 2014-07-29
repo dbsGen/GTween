@@ -294,7 +294,7 @@ static id _defaultManager;
             ((GTween*)obj)->_status = GTweenStatusPlayForword;
         }];
     }else {
-        _tweenIndex = _tweens.count - 1;
+        _tweenIndex = (int)_tweens.count - 1;
         [_tweens enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [obj initializeTween:(BOOL)forword];
             ((GTween*)obj)->_status = GTweenStatusPlayBackword;
@@ -335,7 +335,6 @@ static id _defaultManager;
     }else return NO;
     if (check) {
         _status = GTweenStatusStop;
-        _tweenIndex = 0;
         [self.onComplete invoke];
         return NO;
     }else {
@@ -350,6 +349,7 @@ static id _defaultManager;
                 [tween initializeTween:isForword];
                 tween->_status = isForword ? GTweenStatusPlayForword:GTweenStatusPlayBackword;
             }else {
+                _status = GTweenStatusStop;
                 [self.onComplete invoke];
                 return NO;
             }

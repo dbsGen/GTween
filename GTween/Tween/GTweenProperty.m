@@ -10,7 +10,7 @@
 #import "GTween.h"
 #import <objc/runtime.h>
 
-float lerp(float f, float t, float m) { return f*(1-m)+t*m; }
+#define lerp(FROM, TO, MI) (FROM*(1-MI)+TO*MI)
 #define GTSetter(TYPE, TARGET, MP, SELELCTER, VALUE) ({\
     void (*imp_)(id, SEL, TYPE) = (void (*)(id, SEL, TYPE))MP;\
     imp_(TARGET,SELELCTER, VALUE);\
@@ -220,7 +220,7 @@ CATransform3D transform3DLerp(CATransform3D from, CATransform3D to, float m) {
 @end
 
 typedef struct GTColor {
-    float r,g,b,a;
+    CGFloat r,g,b,a;
 } GTColor;
 @implementation GTweenColorProperty {
     BOOL _seted;
