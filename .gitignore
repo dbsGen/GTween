@@ -1,0 +1,12 @@
+
+*.xcscheme
+
+*.xcuserstate
+
+GTween.xcodeproj/xcuserdata/gen.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+
+GTween.xcodeproj/xcuserdata/gen.xcuserdatad/xcschemes/GTween.xcscheme
+
+GTween.xcodeproj/project.xcworkspace/xcuserdata/gen.xcuserdatad/UserInterfaceState.xcuserstate
+
+GTween.xcodeproj/xcuserdata/gen.xcuserdatad/xcschemes/xcschememanagement.plist
