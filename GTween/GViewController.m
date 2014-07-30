@@ -71,7 +71,6 @@
                          duration:1
                              ease:[GEaseBackOut class]];
     [tween pointPro:@"center"
-               from:CGPointMake(180, 50)
                  to:CGPointMake(180, 250)];
     [tween colorPro:@"backgroundColor" to:[UIColor blueColor]];
     [chain addTween:tween];
@@ -80,15 +79,18 @@
                           duration:1
                               ease:[GEaseBounceOut class]];
     [tween2 pointPro:@"center"
-                from:CGPointMake(180, 250)
                   to:CGPointMake(50, 250)];
     [tween2 colorPro:@"backgroundColor"
                from:[UIColor blueColor]
                  to:[UIColor redColor]];
     [chain addTween:tween2];
-    chain.isLoop = false;
     
     _tween = chain;
+    
+    GTestObject *obj = [[GTestObject alloc] init];
+    NSMethodSignature *signature = [obj methodSignatureForSelector:@selector(ptr)];
+    NSLog(@"%lu", (unsigned long)signature.methodReturnLength);
+    NSLog(@"%c", *signature.methodReturnType);
 }
 
 - (void)didReceiveMemoryWarning

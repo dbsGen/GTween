@@ -8,6 +8,7 @@
 
 #import "GTween.h"
 #import <objc/runtime.h>
+#import "GValue.h"
 
 const float frameRace = 60;
 
@@ -157,6 +158,9 @@ static id _defaultManager;
         _totalFrame = (int)(_duration*frameRace);
         _frame = _totalFrame;
     }
+//    [_properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        [obj reset];
+//    }];
 }
 
 - (void)start
@@ -214,6 +218,10 @@ static id _defaultManager;
 {
     _status = GTweenStatusNoStart;
     [[GTweenManager instance] removeTween:self];
+    
+    [_properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [obj reset];
+    }];
 }
 
 - (BOOL)update
@@ -290,13 +298,13 @@ static id _defaultManager;
     if (forword) {
         _tweenIndex = 0;
         [_tweens enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [obj initializeTween:(BOOL)forword];
+            [obj initializeTween:forword];
             ((GTween*)obj)->_status = GTweenStatusPlayForword;
         }];
     }else {
         _tweenIndex = (int)_tweens.count - 1;
         [_tweens enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [obj initializeTween:(BOOL)forword];
+            [obj initializeTween:forword];
             ((GTween*)obj)->_status = GTweenStatusPlayBackword;
         }];
     }
@@ -362,13 +370,6 @@ static id _defaultManager;
 
 
 @implementation GTween (GTweenProperty)
-#define GTGetter(TYPE, NAME) ({\
-    SEL sel = sel_registerName([NAME cStringUsingEncoding:NSUTF8StringEncoding]);\
-    Method method = class_getInstanceMethod([self.target class], sel);\
-    TYPE(*imp)(id, SEL) = (TYPE(*)(id, SEL))method_getImplementation(method);\
-    imp(self.target, sel);\
-})
-
 - (id)floatPro:(NSString *)name from:(CGFloat)from to:(CGFloat)to
 {
     [self addProperty:[GTweenFloatProperty property:name
@@ -379,9 +380,12 @@ static id _defaultManager;
 
 - (id)floatPro:(NSString *)name to:(CGFloat)to
 {
-    [self floatPro:name
-              from:GTGetter(float, name)
-                to:to];
+    GValue *from = [GValue valueWithTarget:self.target
+                                  property:name
+                                   dynamic:NO];
+    [self addProperty:[[GTweenFloatProperty alloc] initWithName:name
+                                                           from:from
+                                                             to:[NSNumber numberWithFloat:to]]];
     return self;
 }
 
@@ -395,10 +399,12 @@ static id _defaultManager;
 
 - (id)rectPro:(NSString *)name to:(CGRect)to
 {
-    
-    [self rectPro:name
-             from:GTGetter(CGRect, name)
-               to:to];
+    GValue *from = [GValue valueWithTarget:self.target
+                                  property:name
+                                   dynamic:NO];
+    [self addProperty:[[GTweenCGRectProperty alloc] initWithName:name
+                                                            from:from
+                                                              to:[NSValue valueWithCGRect:to]]];
     return self;
 }
 
@@ -412,9 +418,12 @@ static id _defaultManager;
 
 - (id)sizePro:(NSString *)name to:(CGSize)to
 {
-    [self sizePro:name
-             from:GTGetter(CGSize, name)
-               to:to];
+    GValue *from = [GValue valueWithTarget:self.target
+                                  property:name
+                                   dynamic:NO];
+    [self addProperty:[[GTweenCGSizeProperty alloc] initWithName:name
+                                                            from:from
+                                                              to:[NSValue valueWithCGSize:to]]];
     return self;
 }
 
@@ -428,9 +437,13 @@ static id _defaultManager;
 
 - (id)pointPro:(NSString *)name to:(CGPoint)to
 {
-    return [self pointPro:name
-                     from:GTGetter(CGPoint, name)
-                       to:to];
+    GValue *from = [GValue valueWithTarget:self.target
+                                  property:name
+                                   dynamic:NO];
+    [self addProperty:[[GTweenCGPointProperty alloc] initWithName:name
+                                                            from:from
+                                                              to:[NSValue valueWithCGPoint:to]]];
+    return self;
 }
 
 - (id)transformPro:(NSString *)name from:(CATransform3D)from to:(CATransform3D)to
@@ -442,9 +455,13 @@ static id _defaultManager;
 }
 - (id)transformPro:(NSString *)name to:(CATransform3D)to
 {
-    return [self transformPro:name
-                         from:GTGetter(CATransform3D, name)
-                           to:to];
+    GValue *from = [GValue valueWithTarget:self.target
+                                  property:name
+                                   dynamic:NO];
+    [self addProperty:[[GTweenCATransform3DProperty alloc] initWithName:name
+                                                                   from:from
+                                                                     to:[NSValue valueWithCATransform3D:to]]];
+    return self;
 }
 
 - (id)rotationPro:(NSString *)name from:(CGFloat)from to:(CGFloat)to
@@ -465,9 +482,13 @@ static id _defaultManager;
 
 - (id)colorPro:(NSString *)name to:(UIColor *)to
 {
-    return [self colorPro:name
-                     from:GTGetter(UIColor*, name)
-                       to:to];
+    GValue *from = [GValue valueWithTarget:self.target
+                                  property:name
+                                   dynamic:NO];
+    [self addProperty:[[GTweenColorProperty alloc] initWithName:name
+                                                           from:from
+                                                             to:to]];
+    return self;
 }
 
 @end

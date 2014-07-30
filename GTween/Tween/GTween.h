@@ -11,6 +11,22 @@
 #import "GCallback.h"
 #import "GEase.h"
 
+#ifndef GTSetter
+#define GTSetter(TYPE, TARGET, MP, SELELCTER, VALUE) ({\
+    void (*imp_)(id, SEL, TYPE) = (void (*)(id, SEL, TYPE))MP;\
+    imp_(TARGET,SELELCTER, VALUE);\
+})
+#endif
+
+#ifndef GTGetter
+#define GTGetter(TYPE, TARGET, NAME) ({\
+    SEL sel = sel_registerName([NAME cStringUsingEncoding:NSUTF8StringEncoding]);\
+    Method method = class_getInstanceMethod([TARGET class], sel);\
+    TYPE(*imp)(id, SEL) = (TYPE(*)(id, SEL))method_getImplementation(method);\
+    imp(TARGET, sel);\
+})
+#endif
+
 typedef enum : NSUInteger {
     GTweenStatusNoStart,
     GTweenStatusPlayForword,

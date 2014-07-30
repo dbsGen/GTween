@@ -8,13 +8,10 @@
 
 #import "GTweenProperty.h"
 #import "GTween.h"
+#import "GValue.h"
 #import <objc/runtime.h>
 
 #define lerp(FROM, TO, MI) (FROM*(1-MI)+TO*MI)
-#define GTSetter(TYPE, TARGET, MP, SELELCTER, VALUE) ({\
-    void (*imp_)(id, SEL, TYPE) = (void (*)(id, SEL, TYPE))MP;\
-    imp_(TARGET,SELELCTER, VALUE);\
-})
 
 // ---------------- Base Class ------------------
 
@@ -22,7 +19,24 @@
     SEL         _getter,
                 _setter;
     IMP         _setterIMP;
-    
+}
+
+- (id)fromValue
+{
+    if ([_fromValue isKindOfClass:[GValue class]]) {
+        return [_fromValue data];
+    }else {
+        return _fromValue;
+    }
+}
+
+- (id)toValue
+{
+    if ([_toValue isKindOfClass:[GValue class]]) {
+        return [_toValue data];
+    }else {
+        return _toValue;
+    }
 }
 
 - (SEL)getterSEL
@@ -32,8 +46,6 @@
 
 - (SEL)setterSEL
 {
-    NSLog(@"%@", [self.name substringToIndex:1]);
-    NSLog(@"%@", [self.name substringFromIndex:1]);
     NSString *selString = [NSString stringWithFormat:@"set%@%@:", [[self.name substringToIndex:1] uppercaseString],[self.name substringFromIndex:1]];
     
     return sel_registerName([selString cStringUsingEncoding:NSUTF8StringEncoding]);
@@ -63,6 +75,16 @@
 
 - (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel {}
 
+- (void)reset
+{
+    if ([self.fromValue respondsToSelector:@selector(reset)]) {
+        [self.fromValue reset];
+    }
+    if ([self.toValue respondsToSelector:@selector(reset)]) {
+        [self.toValue reset];
+    }
+}
+
 @end
 
 
@@ -70,7 +92,7 @@
 
 @implementation GTweenFloatProperty
 
-+ (id)property:(NSString*)name from:(float)from to:(float)to
++ (id)property:(NSString*)name from:(CGFloat)from to:(CGFloat)to
 {
     return [[self alloc] initWithName:name
                                  from:[NSNumber numberWithFloat:from]
@@ -80,7 +102,7 @@
 - (void)progress:(float)p target:(id)target imp:(IMP)imp selector:(SEL)sel
 {
     float res = lerp([self.fromValue floatValue], [self.toValue floatValue], p);
-    GTSetter(float, target, imp, sel, res);
+    GTSetter(CGFloat, target, imp, sel, res);
 }
 
 @end

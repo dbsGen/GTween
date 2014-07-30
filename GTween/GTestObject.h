@@ -11,5 +11,8 @@
 @interface GTestObject : NSObject
 
 @property (nonatomic) CGFloat f;
+@property (nonatomic) int i;
+@property (nonatomic, strong) id data;
+@property (nonatomic) float* ptr;
 
 @end

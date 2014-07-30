@@ -31,7 +31,7 @@ float lerp(float f, float t, float m);
 //  ----------- Children -----------
 
 @interface GTweenFloatProperty : GTweenProperty
-+ (id)property:(NSString*)name from:(float)from to:(float)to;
++ (id)property:(NSString*)name from:(CGFloat)from to:(CGFloat)to;
 @end
 
 @interface GTweenCGRectProperty : GTweenProperty
