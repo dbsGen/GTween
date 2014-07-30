@@ -493,3 +493,25 @@ static id _defaultManager;
 
 @end
 
+@implementation GTween (DynamicTarget)
+
+- (id)dynamicTarget:(id)target names:(NSArray *)names tweenProperties:(NSArray *)propertyClasses
+{
+    for (int n = 0, t = (int)names.count; n < t; n++) {
+        NSString *name = [names objectAtIndex:n];
+        Class cl = [propertyClasses objectAtIndex:n];
+        GValue *from = [GValue valueWithTarget:self.target
+                                      property:name
+                                       dynamic:NO];
+        GValue *to = [GValue valueWithTarget:target
+                                    property:name
+                                     dynamic:YES];
+        [self addProperty:[[cl alloc] initWithName:name
+                                              from:from
+                                                to:to]];
+    }
+    return self;
+}
+
+@end
+

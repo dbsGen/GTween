@@ -15,7 +15,7 @@
 @end
 
 @implementation GViewController {
-    UIView *_movingView;
+    UIView *_movingView, *_targetView;
     GTween *_tween;
 }
 
@@ -59,38 +59,30 @@
                  forState:UIControlStateNormal];
     [self.view addSubview:button];
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-    view.backgroundColor = [UIColor redColor];
-    [self.view addSubview:view];
-    _movingView = view;
+    _movingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    _movingView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:_movingView];
     
-    GTweenChain *chain = [GTweenChain tweenChain];
-    chain.isLoop = true;
     
-    GTween *tween = [GTween tween:_movingView
-                         duration:1
-                             ease:[GEaseBackOut class]];
-    [tween pointPro:@"center"
-                 to:CGPointMake(180, 250)];
-    [tween colorPro:@"backgroundColor" to:[UIColor blueColor]];
-    [chain addTween:tween];
+    _targetView = [[UIView alloc] initWithFrame:CGRectMake(0, 480, 30, 30)];
+    _targetView.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:_targetView];
     
-    GTween *tween2 = [GTween tween:_movingView
-                          duration:1
-                              ease:[GEaseBounceOut class]];
-    [tween2 pointPro:@"center"
-                  to:CGPointMake(50, 250)];
-    [tween2 colorPro:@"backgroundColor"
-               from:[UIColor blueColor]
-                 to:[UIColor redColor]];
-    [chain addTween:tween2];
+    GTween *tweenTarget = [GTween tween:_targetView
+                               duration:4
+                                   ease:[GEaseLinear class]];
+    [tweenTarget pointPro:@"center"
+                       to:CGPointMake(300, 465)];
     
-    _tween = chain;
+    GTween *tweenMove = [GTween tween:_movingView
+                             duration:4
+                                 ease:[GEaseQuarticIn class]];
+    [tweenMove dynamicTarget:_targetView
+                       names:@[@"center"]
+             tweenProperties:@[[GTweenCGPointProperty class]]];
     
-    GTestObject *obj = [[GTestObject alloc] init];
-    NSMethodSignature *signature = [obj methodSignatureForSelector:@selector(ptr)];
-    NSLog(@"%lu", (unsigned long)signature.methodReturnLength);
-    NSLog(@"%c", *signature.methodReturnType);
+    [tweenTarget start];
+    [tweenMove start];
 }
 
 - (void)didReceiveMemoryWarning

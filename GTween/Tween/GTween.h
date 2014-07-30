@@ -102,3 +102,9 @@ typedef enum : NSUInteger {
 - (id)colorPro:(NSString *)name to:(UIColor*)to;
 
 @end
+
+@interface GTween (DynamicTarget)
+
+- (id)dynamicTarget:(id)target names:(NSArray *)names tweenProperties:(NSArray *)propertyClasses;
+
+@end

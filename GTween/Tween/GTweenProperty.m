@@ -266,7 +266,7 @@ UIColor* colorLerp(GTColor from, GTColor to, float m) {
 {
     if (!_seted) {
         _seted = true;
-        [self.fromValue getRed:&from.a
+        [self.fromValue getRed:&from.r
                          green:&from.g
                           blue:&from.b
                          alpha:&from.a];
