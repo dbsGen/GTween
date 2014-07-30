@@ -245,6 +245,7 @@ static id _defaultManager;
         }];
         [self.onUpdate invoke];
         if (self.isLoop) {
+            [self.onLoop invoke];
             [self initializeTween:isForword];
             return YES;
         }else {
@@ -350,6 +351,7 @@ static id _defaultManager;
         if (![tween update]) {
             _tweenIndex += isForword ? 1 : -1;
             if (_tweenIndex >= _tweens.count && self.isLoop) {
+                [self.onLoop invoke];
                 _tweenIndex %= _tweens.count;
             }
             if (_tweenIndex < _tweens.count && _tweenIndex >= 0) {
@@ -357,8 +359,8 @@ static id _defaultManager;
                 [tween initializeTween:isForword];
                 tween->_status = isForword ? GTweenStatusPlayForword:GTweenStatusPlayBackword;
             }else {
-                _status = GTweenStatusStop;
                 [self.onComplete invoke];
+                _status = GTweenStatusStop;
                 return NO;
             }
         }

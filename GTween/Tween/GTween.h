@@ -48,6 +48,7 @@ typedef enum : NSUInteger {
 // events
 @property (nonatomic, readonly) GCallback   *onComplete;
 @property (nonatomic, readonly) GCallback   *onUpdate;
+@property (nonatomic, readonly) GCallback   *onLoop;
 
 // settings
 @property (nonatomic) BOOL isLoop;

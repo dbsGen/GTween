@@ -1,22 +1,12 @@
 
 *.xcscheme
 
-*.xcuserstate
-
-GTween.xcodeproj/xcuserdata/gen.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
-
-GTween.xcodeproj/xcuserdata/gen.xcuserdatad/xcschemes/GTween.xcscheme
-
-GTween.xcodeproj/project.xcworkspace/xcuserdata/gen.xcuserdatad/UserInterfaceState.xcuserstate
-
-GTween.xcodeproj/xcuserdata/gen.xcuserdatad/xcschemes/xcschememanagement.plist
-
-GTween.xcodeproj/project.xcworkspace/xcuserdata/gen.xcuserdatad/UserInterfaceState.xcuserstate
+*.xcuserstate       
 
 GTween.xcodeproj/project.xcworkspace/xcshareddata/GTween.xccheckout
 
-GTween.xcodeproj/project.xcworkspace/xcuserdata/gen.xcuserdatad/UserInterfaceState.xcuserstate
-
 GTween.xcodeproj/project.xcworkspace/xcuserdata/zhao.xcuserdatad/UserInterfaceState.xcuserstate
 
-GTween.xcodeproj/project.pbxproj
+GTween.xcodeproj/project.xcworkspace/xcuserdata/gen.xcuserdatad/UserInterfaceState.xcuserstate
+
+GTween.xcodeproj/xcuserdata/gen.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
