@@ -7,6 +7,10 @@
 //
 
 #import "GViewController.h"
+#import "GSimpleViewController.h"
+#import "GChainViewController.h"
+#import "GPauseAndResumeViewController.h"
+#import "GMovingTargetViewController.h"
 #import "GTestObject.h"
 #import "GTween.h"
 
@@ -19,70 +23,18 @@
     GTween *_tween;
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"GTween";
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.tag = 1;
-    [button setTitle:@"start" forState:UIControlStateNormal];
-    button.frame = CGRectMake(200, 10, 80, 30);
-    [button addTarget:self
-               action:@selector(clicked:)
-     forControlEvents:UIControlEventTouchUpInside];
-    [button setTitleColor:[UIColor blackColor]
-                 forState:UIControlStateNormal];
-    [self.view addSubview:button];
-    
-    
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.tag = 2;
-    [button setTitle:@"pause" forState:UIControlStateNormal];
-    button.frame = CGRectMake(200, 50, 80, 30);
-    [button addTarget:self
-               action:@selector(clicked:)
-     forControlEvents:UIControlEventTouchUpInside];
-    [button setTitleColor:[UIColor blackColor]
-                 forState:UIControlStateNormal];
-    [self.view addSubview:button];
-    
-    
-    button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.tag = 3;
-    [button setTitle:@"backword" forState:UIControlStateNormal];
-    button.frame = CGRectMake(200, 90, 80, 30);
-    [button addTarget:self
-               action:@selector(clicked:)
-     forControlEvents:UIControlEventTouchUpInside];
-    [button setTitleColor:[UIColor blackColor]
-                 forState:UIControlStateNormal];
-    [self.view addSubview:button];
-    
-    _movingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-    _movingView.backgroundColor = [UIColor redColor];
-    [self.view addSubview:_movingView];
-    
-    
-    _targetView = [[UIView alloc] initWithFrame:CGRectMake(0, 480, 30, 30)];
-    _targetView.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:_targetView];
-    
-    GTween *tweenTarget = [GTween tween:_targetView
-                               duration:4
-                                   ease:[GEaseLinear class]];
-    [tweenTarget pointPro:@"center"
-                       to:CGPointMake(300, 465)];
-    
-    GTween *tweenMove = [GTween tween:_movingView
-                             duration:4
-                                 ease:[GEaseQuarticIn class]];
-    [tweenMove dynamicTarget:_targetView
-                       names:@[@"center"]
-             tweenProperties:@[[GTweenCGPointProperty class]]];
-    
-    [tweenTarget start];
-    [tweenMove start];
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,14 +46,59 @@
     _movingView = nil;
 }
 
-- (void)clicked:(UIButton*)send
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (send.tag == 1) {
-        [_tween start];
-    }else if (send.tag == 2) {
-        [_tween pause];
-    }else if (send.tag == 3) {
-        [_tween backword];
+    return 4;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *cellIdentifier = @"cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:cellIdentifier];
+    }
+    switch (indexPath.row) {
+        case 0:
+            cell.textLabel.text = @"Simple example";
+            break;
+        case 1:
+            cell.textLabel.text = @"Tween chain";
+            break;
+        case 2:
+            cell.textLabel.text = @"Pause & Resume";
+            break;
+        case 3:
+            cell.textLabel.text = @"Moving target";
+            break;
+        default:
+            break;
+    }
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case 0:
+            [self.navigationController pushViewController:[GSimpleViewController new]
+                                                 animated:YES];
+            break;
+        case 1:
+            [self.navigationController pushViewController:[GChainViewController new]
+                                                 animated:YES];
+            break;
+        case 2:
+            [self.navigationController pushViewController:[GPauseAndResumeViewController new]
+                                                 animated:YES];
+            break;
+        case 3:
+            [self.navigationController pushViewController:[GMovingTargetViewController new]
+                                                 animated:YES];
+            break;
+        default:
+            break;
     }
 }
 

@@ -280,3 +280,5 @@ UIColor* colorLerp(GTColor from, GTColor to, float m) {
 }
 
 @end
+
+#undef lerp

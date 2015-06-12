@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE24EC20198FD26200043049 /* GSimpleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24EC1F198FD26200043049 /* GSimpleViewController.m */; };
+		FE24EC23198FD67D00043049 /* GChainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24EC22198FD67D00043049 /* GChainViewController.m */; };
+		FE24EC261991192D00043049 /* GPauseAndResumeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE24EC251991192D00043049 /* GPauseAndResumeViewController.m */; };
 		FEC34B071984B7CA0033784B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEC34B061984B7CA0033784B /* Foundation.framework */; };
 		FEC34B091984B7CA0033784B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEC34B081984B7CA0033784B /* CoreGraphics.framework */; };
 		FEC34B0B1984B7CA0033784B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEC34B0A1984B7CA0033784B /* UIKit.framework */; };
 		FEC34B111984B7CA0033784B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FEC34B0F1984B7CA0033784B /* InfoPlist.strings */; };
 		FEC34B131984B7CA0033784B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC34B121984B7CA0033784B /* main.m */; };
 		FEC34B171984B7CA0033784B /* GAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC34B161984B7CA0033784B /* GAppDelegate.m */; };
-		FEC34B1A1984B7CA0033784B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEC34B181984B7CA0033784B /* Main_iPhone.storyboard */; };
-		FEC34B1D1984B7CA0033784B /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FEC34B1B1984B7CA0033784B /* Main_iPad.storyboard */; };
 		FEC34B201984B7CA0033784B /* GViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC34B1F1984B7CA0033784B /* GViewController.m */; };
 		FEC34B221984B7CA0033784B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FEC34B211984B7CA0033784B /* Images.xcassets */; };
 		FEC34B291984B7CA0033784B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEC34B281984B7CA0033784B /* XCTest.framework */; };
@@ -28,6 +29,7 @@
 		FEC34B4A1984C6800033784B /* GCallback.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC34B491984C6800033784B /* GCallback.m */; };
 		FEC34B4E1984E20D0033784B /* GTestObject.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC34B4D1984E20D0033784B /* GTestObject.m */; };
 		FEC34B511987DF0D0033784B /* GValue.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC34B501987DF0D0033784B /* GValue.m */; };
+		FEDB0057199121830060DBD0 /* GMovingTargetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEDB0056199121830060DBD0 /* GMovingTargetViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FE24EC1E198FD26200043049 /* GSimpleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSimpleViewController.h; sourceTree = "<group>"; };
+		FE24EC1F198FD26200043049 /* GSimpleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSimpleViewController.m; sourceTree = "<group>"; };
+		FE24EC21198FD67D00043049 /* GChainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GChainViewController.h; sourceTree = "<group>"; };
+		FE24EC22198FD67D00043049 /* GChainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GChainViewController.m; sourceTree = "<group>"; };
+		FE24EC241991192D00043049 /* GPauseAndResumeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPauseAndResumeViewController.h; sourceTree = "<group>"; };
+		FE24EC251991192D00043049 /* GPauseAndResumeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPauseAndResumeViewController.m; sourceTree = "<group>"; };
 		FEC34B031984B7CA0033784B /* GTween.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GTween.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FEC34B061984B7CA0033784B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FEC34B081984B7CA0033784B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -51,8 +59,6 @@
 		FEC34B141984B7CA0033784B /* GTween-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GTween-Prefix.pch"; sourceTree = "<group>"; };
 		FEC34B151984B7CA0033784B /* GAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAppDelegate.h; sourceTree = "<group>"; };
 		FEC34B161984B7CA0033784B /* GAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GAppDelegate.m; sourceTree = "<group>"; };
-		FEC34B191984B7CA0033784B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		FEC34B1C1984B7CA0033784B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		FEC34B1E1984B7CA0033784B /* GViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GViewController.h; sourceTree = "<group>"; };
 		FEC34B1F1984B7CA0033784B /* GViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GViewController.m; sourceTree = "<group>"; };
 		FEC34B211984B7CA0033784B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -73,6 +79,8 @@
 		FEC34B4D1984E20D0033784B /* GTestObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTestObject.m; sourceTree = "<group>"; };
 		FEC34B4F1987DF0D0033784B /* GValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GValue.h; sourceTree = "<group>"; };
 		FEC34B501987DF0D0033784B /* GValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GValue.m; sourceTree = "<group>"; };
+		FEDB0055199121830060DBD0 /* GMovingTargetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMovingTargetViewController.h; sourceTree = "<group>"; };
+		FEDB0056199121830060DBD0 /* GMovingTargetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMovingTargetViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +107,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE24EC1D198FD1E100043049 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FE24EC1E198FD26200043049 /* GSimpleViewController.h */,
+				FE24EC1F198FD26200043049 /* GSimpleViewController.m */,
+				FE24EC21198FD67D00043049 /* GChainViewController.h */,
+				FE24EC22198FD67D00043049 /* GChainViewController.m */,
+				FE24EC241991192D00043049 /* GPauseAndResumeViewController.h */,
+				FE24EC251991192D00043049 /* GPauseAndResumeViewController.m */,
+				FEDB0055199121830060DBD0 /* GMovingTargetViewController.h */,
+				FEDB0056199121830060DBD0 /* GMovingTargetViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		FEC34AFA1984B7CA0033784B = {
 			isa = PBXGroup;
 			children = (
@@ -132,12 +155,11 @@
 		FEC34B0C1984B7CA0033784B /* GTween */ = {
 			isa = PBXGroup;
 			children = (
+				FE24EC1D198FD1E100043049 /* Controller */,
 				FEC34B4B1984E1F80033784B /* Test */,
 				FEC34B3E1984B7E00033784B /* Tween */,
 				FEC34B151984B7CA0033784B /* GAppDelegate.h */,
 				FEC34B161984B7CA0033784B /* GAppDelegate.m */,
-				FEC34B181984B7CA0033784B /* Main_iPhone.storyboard */,
-				FEC34B1B1984B7CA0033784B /* Main_iPad.storyboard */,
 				FEC34B1E1984B7CA0033784B /* GViewController.h */,
 				FEC34B1F1984B7CA0033784B /* GViewController.m */,
 				FEC34B211984B7CA0033784B /* Images.xcassets */,
@@ -278,9 +300,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FEC34B1D1984B7CA0033784B /* Main_iPad.storyboard in Resources */,
 				FEC34B221984B7CA0033784B /* Images.xcassets in Resources */,
-				FEC34B1A1984B7CA0033784B /* Main_iPhone.storyboard in Resources */,
 				FEC34B111984B7CA0033784B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,12 +322,16 @@
 			files = (
 				FEC34B171984B7CA0033784B /* GAppDelegate.m in Sources */,
 				FEC34B4A1984C6800033784B /* GCallback.m in Sources */,
+				FE24EC261991192D00043049 /* GPauseAndResumeViewController.m in Sources */,
 				FEC34B411984B7ED0033784B /* GTween.m in Sources */,
 				FEC34B511987DF0D0033784B /* GValue.m in Sources */,
+				FE24EC20198FD26200043049 /* GSimpleViewController.m in Sources */,
+				FE24EC23198FD67D00043049 /* GChainViewController.m in Sources */,
 				FEC34B441984B8AF0033784B /* GTweenProperty.m in Sources */,
 				FEC34B471984BD750033784B /* GEase.m in Sources */,
 				FEC34B131984B7CA0033784B /* main.m in Sources */,
 				FEC34B4E1984E20D0033784B /* GTestObject.m in Sources */,
+				FEDB0057199121830060DBD0 /* GMovingTargetViewController.m in Sources */,
 				FEC34B201984B7CA0033784B /* GViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,22 +361,6 @@
 				FEC34B101984B7CA0033784B /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		FEC34B181984B7CA0033784B /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FEC34B191984B7CA0033784B /* Base */,
-			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		FEC34B1B1984B7CA0033784B /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FEC34B1C1984B7CA0033784B /* Base */,
-			);
-			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		FEC34B311984B7CA0033784B /* InfoPlist.strings */ = {
@@ -447,6 +455,7 @@
 				GCC_PREFIX_HEADER = "GTween/GTween-Prefix.pch";
 				INFOPLIST_FILE = "GTween/GTween-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -460,6 +469,7 @@
 				GCC_PREFIX_HEADER = "GTween/GTween-Prefix.pch";
 				INFOPLIST_FILE = "GTween/GTween-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

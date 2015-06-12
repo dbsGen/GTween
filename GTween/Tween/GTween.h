@@ -11,6 +11,10 @@
 #import "GCallback.h"
 #import "GEase.h"
 
+#ifndef GTweenMake
+#define GTweenMake(TARGET, DURATION, EASE) [[GTween alloc] initWithTarget:TARGET duration:DURATION ease:[EASE class]]
+#endif
+
 #ifndef GTSetter
 #define GTSetter(TYPE, TARGET, MP, SELELCTER, VALUE) ({\
     void (*imp_)(id, SEL, TYPE) = (void (*)(id, SEL, TYPE))MP;\
@@ -52,6 +56,7 @@ typedef enum : NSUInteger {
 
 // settings
 @property (nonatomic) BOOL isLoop;
+@property (nonatomic) NSTimeInterval    delay;
 
 - (id)initWithTarget:(id)target duration:(NSTimeInterval)duration ease:(id)ease;
 
@@ -66,7 +71,7 @@ typedef enum : NSUInteger {
 - (void)backword;
 
 // need override
-// Call before not play to start play.
+// Call before no play to start play.
 - (void)initializeTween:(BOOL)forword;
 
 @end
@@ -107,5 +112,11 @@ typedef enum : NSUInteger {
 @interface GTween (DynamicTarget)
 
 - (id)dynamicTarget:(id)target names:(NSArray *)names tweenProperties:(NSArray *)propertyClasses;
+
+@end
+
+@interface NSObject (GTween)
+
+- (void)stopAllTweens;
 
 @end

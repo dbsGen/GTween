@@ -14,7 +14,7 @@ const float frameRace = 60;
 
 @interface GTween ()
 
-- (BOOL)update;
+- (BOOL)update:(NSTimeInterval)delta;
 
 @end
 
@@ -30,6 +30,7 @@ const float frameRace = 60;
 @implementation GTweenManager {
     NSTimer         *_timer;
     NSMutableArray  *_tweens;
+    NSTimeInterval  _oldTime;
 }
 
 static id _defaultManager;
@@ -50,6 +51,7 @@ static id _defaultManager;
     self = [super init];
     if (self) {
         _tweens = [NSMutableArray new];
+        _oldTime = 0;
     }
     return self;
 }
@@ -57,6 +59,7 @@ static id _defaultManager;
 - (void)checkTimer
 {
     if (!_timer || !_timer.isValid) {
+        _oldTime = [NSDate date].timeIntervalSince1970;
         _timer = [NSTimer scheduledTimerWithTimeInterval:1/frameRace
                                                   target:self
                                                 selector:@selector(update)
@@ -78,20 +81,25 @@ static id _defaultManager;
 - (void)removeTween:(GTween *)tween
 {
     [_tweens removeObject:tween];
+    if (_tweens.count == 0)
+        [_timer invalidate];
 }
 
 - (void)update
 {
+    NSDate *date = [NSDate date];
+    NSTimeInterval time = date.timeIntervalSince1970;
     NSArray *array = [_tweens copy];
     [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         GTween *tween = obj;
-        if (![tween update]) {
+        if (![tween update:time-_oldTime]) {
             [_tweens removeObject:tween];
         }
     }];
     if (_tweens.count == 0) {
         [_timer invalidate];
     }
+    _oldTime = time;
 }
 
 @end
@@ -100,8 +108,7 @@ static id _defaultManager;
 @protected
     GTweenStatus    _status;
     NSMutableArray  *_properties;
-    int     _frame,
-            _totalFrame;
+    NSTimeInterval  _timeLeft;
     
 }
 
@@ -112,6 +119,7 @@ static id _defaultManager;
         _onUpdate = [[GCallback alloc] init];
         _onComplete = [[GCallback alloc] init];
         _properties = [NSMutableArray array];
+        _delay = 0;
     }
     return self;
 }
@@ -134,7 +142,7 @@ static id _defaultManager;
 
 - (float)currentPercent
 {
-    return _frame/(float)_totalFrame;
+    return (_timeLeft-_delay)/_duration;
 }
 
 + (id)tween:(id)target duration:(NSTimeInterval)duration ease:(GEase *)ease
@@ -152,11 +160,9 @@ static id _defaultManager;
 - (void)initializeTween:(BOOL)forword
 {
     if (forword) {
-        _totalFrame = (int)(_duration*frameRace);
-        _frame = 0;
+        _timeLeft = 0;
     }else {
-        _totalFrame = (int)(_duration*frameRace);
-        _frame = _totalFrame;
+        _timeLeft = _duration + _delay;
     }
 //    [_properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 //        [obj reset];
@@ -224,16 +230,16 @@ static id _defaultManager;
     }];
 }
 
-- (BOOL)update
+- (BOOL)update:(NSTimeInterval)delta
 {
     BOOL check, isForword;
     if (_status == GTweenStatusPlayForword) {
-        _frame ++;
-        check = _frame >= _totalFrame;
+        _timeLeft += delta;
+        check = _timeLeft >= _duration + _delay;
         isForword = true;
     }else if (_status == GTweenStatusPlayBackword) {
-        _frame --;
-        check = _frame < 0;
+        _timeLeft -= delta;
+        check = _timeLeft < 0;
         isForword = false;
     }else {
         return NO;
@@ -254,7 +260,7 @@ static id _defaultManager;
             return NO;
         }
     }else {
-        float p = [self.ease ease:_frame/(float)_totalFrame];
+        float p = [self.ease ease:MAX((_timeLeft-_delay)/_duration, 0)];
         [_properties enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [obj progress:p target:_target];
         }];
@@ -273,6 +279,7 @@ static id _defaultManager;
 @implementation GTweenChain{
     NSMutableArray *_tweens;
     int _tweenIndex;
+    
 }
 
 - (id)init
@@ -332,7 +339,7 @@ static id _defaultManager;
     [_tweens addObject:tween];
 }
 
-- (BOOL)update
+- (BOOL)update:(NSTimeInterval)delta
 {
     BOOL check, isForword;
     if (_status == GTweenStatusPlayForword) {
@@ -348,7 +355,7 @@ static id _defaultManager;
         return NO;
     }else {
         GTween *tween = [_tweens objectAtIndex:_tweenIndex];
-        if (![tween update]) {
+        if (![tween update:delta]) {
             _tweenIndex += isForword ? 1 : -1;
             if (_tweenIndex >= _tweens.count && self.isLoop) {
                 [self.onLoop invoke];
@@ -513,6 +520,20 @@ static id _defaultManager;
                                                 to:to]];
     }
     return self;
+}
+
+@end
+
+@implementation NSObject (GTween)
+
+- (void)stopAllTweens
+{
+    GTweenManager *manager = [GTweenManager instance];
+    [[manager tweens] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([(GTween*)obj target] == self) {
+            [obj stop];
+        }
+    }];
 }
 
 @end

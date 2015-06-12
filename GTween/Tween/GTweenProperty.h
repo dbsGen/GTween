@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-float lerp(float f, float t, float m);
-
 //  ----------- Base Class -----------
 
 @interface GTweenProperty : NSObject
 
+// NSValue or GValue is allowed.
 @property (nonatomic, strong) id fromValue;
 @property (nonatomic, strong) id toValue;
+// Property name.
 @property (nonatomic, strong) NSString *name;
 
 - (id)initWithName:(NSString*)name from:(id)from to:(id)to;
