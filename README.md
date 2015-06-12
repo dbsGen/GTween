@@ -1,7 +1,7 @@
 GTween
 ======
 
-A lightweight tween library for iOS. Ease functions from [tween.js](https://github.com/sole/tween.js)
+A lightweight tween library for iOS. Ease functions from [robertpenner.com](http://robertpenner.com/easing/)
 
 ======
 
