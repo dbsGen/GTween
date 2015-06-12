@@ -1,7 +1,7 @@
 GTween
 ======
 
-A lightweight tween library for iOS. Ease functions from [robertpenner.com](http://robertpenner.com/easing/)
+A lightweight tween library for iOS. Ease functions from [tween.js](https://github.com/sole/tween.js)
 
 ======
 
@@ -17,4 +17,3 @@ Usage
                  to:CGPointMake(180, 250)];
     [tween start];
 
-[Blog link(Chinese)](http://zhaorenzhi.cn/articles/53d5256961192cd8c9000004)
